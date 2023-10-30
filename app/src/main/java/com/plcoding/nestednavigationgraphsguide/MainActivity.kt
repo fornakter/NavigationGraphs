@@ -3,6 +3,8 @@ package com.plcoding.nestednavigationgraphsguide
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -10,6 +12,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
@@ -28,7 +31,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             NestedNavigationGraphsGuideTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = "home") {
+                NavHost(navController = navController, startDestination = "auth") {
                     composable("about") {
 
                     }
@@ -38,39 +41,50 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable("login") {
                             val viewModel = it.sharedViewModel<SampleViewModel>(navController)
+                            Column(
+                                Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
 
-                            Button(onClick = {
-                                navController.navigate("calendar") {
-                                    popUpTo("auth") {
-                                        inclusive = true
+                                Text(text = "Login")
+                                Button(onClick = {
+                                    navController.navigate("register") {
+                                        popUpTo("auth") {
+                                            inclusive = true
+                                        }
                                     }
+                                }) {
+                                    Text(text = "Click me")
                                 }
-                            }) {
-
+                                // End Button
                             }
+                            // End Column
                         }
                         composable("register") {
                             val viewModel = it.sharedViewModel<SampleViewModel>(navController)
+                            calOver()
                         }
                         composable("forgot_password") {
                             val viewModel = it.sharedViewModel<SampleViewModel>(navController)
                         }
                     }
-                    navigation(
-                        startDestination = "calendar_overview",
-                        route = "calendar"
-                    ) {
-                        composable("calendar_overview") {
-
-                        }
-                        composable("calendar_entry") {
-
-                        }
-                    }
                 }
             }
+
         }
+
     }
+
+}
+@Composable
+fun calOver(){
+    Column(Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(text = "Nowy register")
+    }
+
 }
 
 @Composable
